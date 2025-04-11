@@ -123,7 +123,7 @@ function RatingReviewsPage() {
     const newPage = page + 1;
     setPage(newPage);
     Service.getCatListService(itemId, search, newPage, rowsPerPage)
-      .then((item) => {
+      .then((item: any) => {
         setIsLoaderPagination(false);
         setCurrentList(item.data.data.list);
         setList((prev: any) => [...prev, ...item.data.data.list]);
@@ -144,7 +144,7 @@ function RatingReviewsPage() {
     const newPage = page - 1;
     setPage(newPage);
     Service.getCatListService(itemId, search, newPage, rowsPerPage)
-      .then((item) => {
+      .then((item: any) => {
         setIsLoaderPagination(false);
         setList((prev: any) =>
           prev?.filter(
@@ -322,7 +322,7 @@ function RatingReviewsPage() {
               )}
             </div>
             {list?.length < 1 ? (
-              <CustomText noroundedborders text="No Records Found" />
+              <CustomText noRoundedBorders text="No Records Found" />
             ) : null}
             <div className="mt-3 flex w-[100%] justify-end py-3">
               {list?.length > rowsPerPage && (

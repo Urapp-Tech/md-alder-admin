@@ -319,7 +319,7 @@ function AppUserScheduleTabPage({
                         </div> */}
             </>
           ) : (
-            <CustomText noroundedborders text="No Address Records" />
+            <CustomText noRoundedBorders text="No Address Records" />
           )}
         </div>
       </div>

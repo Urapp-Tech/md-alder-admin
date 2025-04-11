@@ -342,7 +342,7 @@ function AppUserTab({
         </table>
       </div>
       {list?.length < 1 ? (
-        <CustomText noroundedborders text="No Records Found" />
+        <CustomText noRoundedBorders text="No Records Found" />
       ) : null}
       <div className="mt-5 flex items-center justify-center">
         <TablePagination

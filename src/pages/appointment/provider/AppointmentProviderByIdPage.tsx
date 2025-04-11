@@ -68,7 +68,7 @@ function AppointmentProviderByIdPage() {
         searchTxt,
         newPage,
         rowsPerPage
-      ).then((item) => {
+      ).then((item: any) => {
         setList(item.data.data.list);
         setTotal(item.data.data.total);
       });
@@ -82,7 +82,7 @@ function AppointmentProviderByIdPage() {
     setPage(newPage);
     // offset? ,limit rowsperpage hoga ofset page * rowsperPage
     Service.ProviderTodaysList(providerId, search, newPage, rowsPerPage).then(
-      (item) => {
+      (item: any) => {
         setList(item.data.data.list);
         setTotal(item.data.data.total);
       }
@@ -97,7 +97,7 @@ function AppointmentProviderByIdPage() {
     setRowsPerPage(newRowperPage);
     setPage(newPage);
     Service.ProviderTodaysList(providerId, search, newPage, newRowperPage).then(
-      (item) => {
+      (item: any) => {
         setList(item.data.data.list);
         setTotal(item.data.data.total);
       }
@@ -121,7 +121,7 @@ function AppointmentProviderByIdPage() {
             });
           }
         })
-        .catch((err) => {
+        .catch((err: Error) => {
           setIsLoader(false);
           setIsNotify(true);
           setNotifyMessage({
@@ -320,7 +320,7 @@ function AppointmentProviderByIdPage() {
             </table>
           </div>
           {list?.length < 1 ? (
-            <CustomText noroundedborders text="No Records Found" />
+            <CustomText noRoundedBorders text="No Records Found" />
           ) : null}
           <div className="mt-3 flex w-[100%] justify-center py-3">
             <TablePagination

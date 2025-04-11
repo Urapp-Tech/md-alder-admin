@@ -649,7 +649,7 @@ function AppointmentProviderSchedulePage() {
             </table>
           </div>
           {list.appointmentProviderSchedule?.length < 1 ? (
-            <CustomText noroundedborders text="No Records Found" />
+            <CustomText noRoundedBorders text="No Records Found" />
           ) : null}
         </div>
       </div>

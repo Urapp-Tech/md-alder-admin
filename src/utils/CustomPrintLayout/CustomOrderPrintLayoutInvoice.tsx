@@ -142,7 +142,7 @@ const CustomPrintLayouts = forwardRef<any, any>((props: any, ref: any) => {
                       );
                     })
                   ) : props?.data?.orderItems?.length < 1 ? (
-                    <CustomText noroundedborders text="No Records Found" />
+                    <CustomText noRoundedBorders text="No Records Found" />
                   ) : null}
                 </tbody>
               </table>

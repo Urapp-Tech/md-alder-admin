@@ -2,7 +2,7 @@ import { FAQ } from '../../utils/constants';
 import network from '../../utils/network';
 
 const FaqList = (tenantId: any, search: string, page: number, size: number) => {
-  return network.getWithQueryParam(`${FAQ}/list/${tenantId}`, {
+  return network.get(`${FAQ}/list/${tenantId}`, {
     search,
     page: page.toString(),
     size: size.toString(),

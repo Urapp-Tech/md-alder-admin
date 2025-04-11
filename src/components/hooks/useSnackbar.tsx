@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { SnackbarCloseReason } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
@@ -37,7 +38,10 @@ export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({
     setOpen(true);
   };
 
-  const handleClose = (_event?: React.SyntheticEvent, reason?: string) => {
+  const handleClose = (
+    _event?: React.SyntheticEvent | Event,
+    reason?: string | SnackbarCloseReason
+  ) => {
     if (reason === 'clickaway') return;
     setOpen(false);
   };

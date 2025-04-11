@@ -11,7 +11,7 @@ type Props = {
   dialogText?: string;
   dialogDesc?: string;
   type?: string;
-  callback?: (...args: any[]) => any;
+  callback?: any;
 };
 
 function PermissionPopup({

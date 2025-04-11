@@ -7,7 +7,7 @@ const getListService = (
   page: number,
   size: number
 ) => {
-  return network.getWithQueryParam(`${RATING}/list/${tenant}`, {
+  return network.get(`${RATING}/list/${tenant}`, {
     search,
     page: page.toString(),
     size: size.toString(),
@@ -20,7 +20,7 @@ const getCatListService = (
   page: number,
   size: number
 ) => {
-  return network.getWithQueryParam(`${RATING}/reviews/${catId}`, {
+  return network.get(`${RATING}/reviews/${catId}`, {
     search,
     page: page.toString(),
     size: size.toString(),
@@ -28,11 +28,11 @@ const getCatListService = (
 };
 
 const getCatStarRating = (homeCatId: string | any) => {
-  return network.getWithQueryParam(`${RATING}/distinct/star/list/${homeCatId}`);
+  return network.get(`${RATING}/distinct/star/list/${homeCatId}`);
 };
 
 const getCatStarDetail = (homeCatId: string | any) => {
-  return network.getWithQueryParam(`${RATING}/item/detail/${homeCatId}`);
+  return network.get(`${RATING}/item/detail/${homeCatId}`);
 };
 
 export default {

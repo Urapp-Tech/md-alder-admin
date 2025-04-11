@@ -99,7 +99,7 @@ function FaqPage() {
         searchTxt,
         newPage,
         rowsPerPage
-      ).then((item) => {
+      ).then((item: any) => {
         setList(item.data.data.list);
         setTotal(item.data.data.total);
       });
@@ -113,7 +113,7 @@ function FaqPage() {
     setPage(newPage);
     // offset? ,limit rowsperpage hoga ofset page * rowsperPage
     Service.FaqList(authState.user.tenant, search, newPage, rowsPerPage).then(
-      (item) => {
+      (item: any) => {
         setList(item.data.data.list);
         setTotal(item.data.data.total);
       }
@@ -128,7 +128,7 @@ function FaqPage() {
     setRowsPerPage(newRowperPage);
     setPage(newPage);
     Service.FaqList(authState.user.tenant, search, newPage, rowsPerPage).then(
-      (item) => {
+      (item: any) => {
         setList(item.data.data.list);
         setTotal(item.data.data.total);
       }
@@ -197,7 +197,7 @@ function FaqPage() {
             setTotal(item.data.data.total);
           }
         })
-        .catch((err) => {
+        .catch((err: Error) => {
           setIsLoader(false);
           setIsNotify(true);
           setNotifyMessage({
@@ -445,7 +445,7 @@ function FaqPage() {
             </table>
           </div>
           {list?.length < 1 ? (
-            <CustomText noroundedborders text="No Records Found" />
+            <CustomText noRoundedBorders text="No Records Found" />
           ) : null}
           <div className="mt-3 flex w-[100%] justify-center py-3">
             <TablePagination

@@ -221,7 +221,7 @@ const ProviderTodaysList = (
   page: number,
   size: number
 ) => {
-  return network.getWithQueryParam(
+  return network.get(
     `${APPOINTMENT_PREFIX}/${PROVIDER_PREFIX}/find/${providerID}`,
     {
       search,

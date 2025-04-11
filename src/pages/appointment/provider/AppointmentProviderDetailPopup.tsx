@@ -271,7 +271,7 @@ function AppointmentProviderDetailPopup({
                       }
                     )
                   ) : list?.appointmentService?.length < 1 ? (
-                    <CustomText noroundedborders text="No Records Found" />
+                    <CustomText noRoundedBorders text="No Records Found" />
                   ) : null}
                 </tbody>
               </table>

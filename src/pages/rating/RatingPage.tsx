@@ -47,7 +47,7 @@ function RatingPage() {
         searchTxt,
         newPage,
         rowsPerPage
-      ).then((item) => {
+      ).then((item: any) => {
         setList(item.data.data.list);
         setTotal(item.data.data.total);
       });
@@ -61,11 +61,11 @@ function RatingPage() {
     setPage(newPage);
     // offset? ,limit rowsperpage hoga ofset page * rowsperPage
     Service.getListService(authState.user.tenant, search, newPage, rowsPerPage)
-      .then((item) => {
+      .then((item: any) => {
         setList(item.data.data.list);
         setTotal(item.data.data.total);
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         setIsLoader(false);
         setIsNotify(true);
         setNotifyMessage({
@@ -87,7 +87,7 @@ function RatingPage() {
       search,
       newPage,
       newRowperPage
-    ).then((item) => {
+    ).then((item: any) => {
       setList(item.data.data.list);
       setTotal(item.data.data.total);
     });
@@ -117,7 +117,7 @@ function RatingPage() {
             setTotal(item.data.data.total);
           }
         })
-        .catch((err) => {
+        .catch((err: Error) => {
           setIsLoader(false);
           setIsNotify(true);
           setNotifyMessage({
@@ -251,7 +251,7 @@ function RatingPage() {
             </table>
           </div>
           {list?.length < 1 ? (
-            <CustomText noroundedborders text="No Records Found" />
+            <CustomText noRoundedBorders text="No Records Found" />
           ) : null}
           <div className="mt-3 flex w-[100%] justify-center py-3">
             <TablePagination
