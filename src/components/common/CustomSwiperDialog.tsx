@@ -7,6 +7,9 @@ import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import React, { Fragment, useRef } from 'react';
 import '../../assets/css/PopupStyle.css';
+import Button from '@mui/material/Button';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
 import WorkDaysForm from '../../pages/settings/WorkDaysForm';
 import {
   BARBER_SERVICES,
@@ -19,9 +22,6 @@ import CustomDropDown from './CustomDropDown';
 import CustomInputBox from './CustomInputBox';
 import ErrorSpanBox from './ErrorSpanBox';
 import TimePicker from './TimePicker';
-import Button from '@mui/material/Button';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
 
 type Props = {
   control?: any;
@@ -125,6 +125,7 @@ function CustomSwiperDialog({
           spaceBetween={50}
           slidesPerView={1}
           // navigation={true}
+          // eslint-disable-next-line no-return-assign
           onSwiper={(swiper: any) => (swiperRef.current = swiper)}
         >
           <SwiperSlide className="custom-swiper-slide w-full">
@@ -401,10 +402,10 @@ function CustomSwiperDialog({
               />
               <CustomButton
                 buttonType="button"
-                title={'Next'}
+                title="Next"
                 iconRight={<EastIcon className="text-base" />}
                 // onclick={handleNextSlide}
-                type={'submit'}
+                type="submit"
                 className="btn-black-fill"
                 sx={{
                   padding: '0.375rem 2rem !important',
@@ -462,9 +463,9 @@ function CustomSwiperDialog({
               />
               <CustomButton
                 buttonType="button"
-                title={'Submit'}
+                title="Submit"
                 // onclick={handleNextSlide}
-                type={'submit'}
+                type="submit"
                 className="btn-black-fill"
                 sx={{
                   padding: '0.375rem 2rem !important',
