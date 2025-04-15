@@ -385,10 +385,13 @@ const DoctorsCreatePage = () => {
                     <FormGroup>
                       <FormControl variant="outlined" fullWidth>
                         <TextareaAutosize
+                          minRows={5}
+                          maxRows={15}
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
                           className="alder-form-control"
                           placeholder="Bio"
                           name="bio"
-                          minRows={12}
                         />
                       </FormControl>
                     </FormGroup>

@@ -400,10 +400,13 @@ const DoctorsEditPage = () => {
                     <FormGroup>
                       <FormControl variant="outlined" fullWidth>
                         <TextareaAutosize
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
                           className="alder-form-control"
                           placeholder="Bio"
                           name="bio"
-                          minRows={12}
+                          minRows={5}
+                          maxRows={15}
                           defaultValue="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry."
                         />
                       </FormControl>
