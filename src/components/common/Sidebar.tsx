@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+// import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import { Fragment, useEffect, useState } from 'react';
 // import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 // import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
@@ -10,7 +10,7 @@ import { Fragment, useEffect, useState } from 'react';
 // import LinkedInIcon from '@mui/icons-material/LinkedIn';
 // import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 // import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+// import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 // import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 // import TwitterIcon from '@mui/icons-material/Twitter';
 // import WhatsAppIcon from '@mui/icons-material/WhatsApp';
@@ -71,20 +71,20 @@ const links = [
     // icon: <PatientsIcon />,
     icon: assets.images.patient,
   },
-  {
-    name: 'Doctor',
-    path: 'add-doctor',
-    permission: 'Setting View',
-    // icon: <SettingsOutlinedIcon fontSize="inherit" />,
-    icon: assets.images.patient,
-  },
-  {
-    name: 'Form Fields',
-    path: 'fields',
-    permission: 'Setting View',
-    // icon: <SettingsOutlinedIcon fontSize="inherit" />,
-    icon: assets.images.patient,
-  },
+  // {
+  //   name: 'Doctor',
+  //   path: 'add-doctor',
+  //   permission: 'Setting View',
+  //   // icon: <SettingsOutlinedIcon fontSize="inherit" />,
+  //   icon: assets.images.patient,
+  // },
+  // {
+  //   name: 'Form Fields',
+  //   path: 'fields',
+  //   permission: 'Setting View',
+  //   // icon: <SettingsOutlinedIcon fontSize="inherit" />,
+  //   icon: assets.images.patient,
+  // },
   // {
   //   name: 'EditDoctor',
   //   path: 'edit-doctor',

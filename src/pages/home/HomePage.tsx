@@ -35,7 +35,7 @@ function HomePage() {
   const [emptyVariable] = useState(null);
 
   useEffect(() => {
-    Service.getDashboardCount(authState.user.tenant)
+    Service.getDashboardActivity()
       .then((res) => {
         if (res.data.success) {
           setIsLoader(false);

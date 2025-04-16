@@ -12,6 +12,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import SendIcon from '@mui/icons-material/Send';
 import { useForm } from 'react-hook-form';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from 'react-router-dom';
 import SmileFace from '../../assets/images/smile-dark.png';
 import TopBar from '../../components/common/Md-Alder/TopBar';
 import { Patient } from '../../interfaces/patient.interface';
@@ -29,6 +30,7 @@ import { useSnackbar } from '../../components/hooks/useSnackbar';
 
 const PatientLogCreatePage = () => {
   const { showMessage } = useSnackbar();
+  const navigate = useNavigate();
   const [imagePreview, setImagePreview] = useState<string | undefined | null>(
     null
   );
@@ -95,6 +97,7 @@ const PatientLogCreatePage = () => {
         if (item.data.success) {
           showMessage(item.data.message, 'success');
           setIsLoader(false);
+          navigate(-1);
         } else {
           showMessage(item.data.message, 'error');
           setIsLoader(false);

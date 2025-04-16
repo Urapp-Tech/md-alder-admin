@@ -12,7 +12,7 @@ import {
   ChartData,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { faker } from '@faker-js/faker';
+// import { faker } from '@faker-js/faker';
 import { Button } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
@@ -51,14 +51,14 @@ export const options: ChartOptions<'line'> = {
       },
       stacked: false,
       ticks: {
-        stepSize: 2000,
+        stepSize: 3,
         padding: 20,
         color: '#A9A9A9',
       },
       border: {
         display: false,
       },
-      max: 8000,
+      max: 12,
     },
   },
   plugins: {
@@ -90,51 +90,62 @@ export const options: ChartOptions<'line'> = {
   },
 };
 
-const labels = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
+const DashboardChartLine = ({ data }: any) => {
+  const monthLabels = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
 
-export const data: ChartData<'line', number[], string> = {
-  labels,
-  datasets: [
-    {
-      label: 'Male',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 8000 })),
-      // borderColor: 'rgb(56, 0, 241,0.3)',
-      borderColor: '#3800F1',
-      backgroundColor: '#3800F1',
-      tension: 1,
-      cubicInterpolationMode: 'monotone',
-      borderWidth: 5,
-      hoverBorderColor: 'rgb(56, 0, 241)',
-    },
-    {
-      label: 'Female',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 8000 })),
-      backgroundColor: '#E126FF',
-      borderColor: 'rgb(225, 38, 255,0.3)',
-      tension: 1,
-      cubicInterpolationMode: 'monotone',
-      borderWidth: 5,
-    },
-  ],
-};
+  const maleData = new Array(12).fill(0);
+  const femaleData = new Array(12).fill(0);
 
-const DashboardChartLine = () => {
+  data?.forEach(({ month, gender, total }: any) => {
+    const index = monthLabels.indexOf(month);
+    if (index !== -1) {
+      if (gender === 'male') maleData[index] = Number(total);
+      else if (gender === 'female') femaleData[index] = Number(total);
+    }
+  });
+
+  const chartData: ChartData<'line', number[], string> = {
+    labels: monthLabels,
+    datasets: [
+      {
+        label: 'Male',
+        data: maleData,
+        // borderColor: 'rgb(56, 0, 241,0.3)',
+        borderColor: '#3800F1',
+        backgroundColor: '#3800F1',
+        tension: 1,
+        cubicInterpolationMode: 'monotone',
+        borderWidth: 5,
+        hoverBorderColor: 'rgb(56, 0, 241)',
+      },
+      {
+        label: 'Female',
+        data: femaleData,
+        backgroundColor: '#E126FF',
+        borderColor: 'rgb(225, 38, 255,0.3)',
+        tension: 1,
+        cubicInterpolationMode: 'monotone',
+        borderWidth: 5,
+      },
+    ],
+  };
+
   return (
     <div className=" p-5">
-      <div className="flex w-full justify-between">
+      <div className="flex w-full items-center justify-between">
         <div>
           <h1 className=" p-2 font-an-gurmukhi text-lg font-medium">
             Patient Overview
@@ -152,7 +163,7 @@ const DashboardChartLine = () => {
             </span>
           </div>
         </div>
-        <div className="self-center">
+        {/* <div className="self-center">
           <Button
             variant="outlined"
             endIcon={<ExpandMoreIcon />}
@@ -160,10 +171,10 @@ const DashboardChartLine = () => {
           >
             Monthly
           </Button>
-        </div>
+        </div> */}
       </div>
       <div className="h-[360px]">
-        <Line data={data} options={options} />
+        <Line data={chartData} options={options} />
       </div>
     </div>
   );

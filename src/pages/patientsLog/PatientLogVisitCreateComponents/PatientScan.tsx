@@ -1,6 +1,6 @@
 import { Button, FormControl, FormGroup, Input } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import camera from '../../../assets/images/camera-dark.png';
 import PatientScanCard from './PatientScanCard';
 import { PatientVisitScan } from '../../../interfaces/patient.interface';
@@ -24,6 +24,15 @@ const PatientScan = () => {
     { image: null, caption: '' },
   ]);
 
+  const scanMedia = watch('scanMedia');
+  console.log('scanmedia', scanMedia);
+
+  useEffect(() => {
+    if (scanMedia && Array.isArray(scanMedia)) {
+      setScanData(scanMedia);
+    }
+  }, [scanMedia]);
+
   const handleScanDataChange = useCallback(
     (index: number, data: { image: any; caption: string }) => {
       setScanData((prev) => {
@@ -41,9 +50,14 @@ const PatientScan = () => {
   return (
     <div className="container">
       <div className="mt-3 grid grid-cols-1 gap-5 md:grid-cols-3">
-        <PatientScanCard index={0} callback={handleScanDataChange} />
-        <PatientScanCard index={1} callback={handleScanDataChange} />
-        <PatientScanCard index={2} callback={handleScanDataChange} />
+        {scanData.map((item, index) => (
+          <PatientScanCard
+            key={index}
+            index={index}
+            callback={handleScanDataChange}
+            defaultValue={item} // ✅ pass existing image/caption
+          />
+        ))}
       </div>
     </div>
   );

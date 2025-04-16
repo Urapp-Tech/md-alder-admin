@@ -38,6 +38,7 @@
     "@mui/material": "5.11.14",
     "@mui/styled-engine-sc": "5.11.11",
     "@mui/x-date-pickers": "6.0.3",
+    "@mui/x-date-pickers-pro": "^7.28.3",
     "@reduxjs/toolkit": "^1.9.3",
     "axios": "^1.4.0",
     "chart.js": "^4.2.1",

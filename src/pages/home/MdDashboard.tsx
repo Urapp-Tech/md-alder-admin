@@ -9,7 +9,7 @@ import { Divider } from '@mui/material';
 import Loader from '../../components/common/Loader';
 import TopBar from '../../components/common/Md-Alder/TopBar';
 import DashboardCard from '../../components/common/Md-Alder/Dashboard/DashboardCard';
-import doctorIcon from '../../assets/images/Doctor.png';
+// import doctorIcon from '../../assets/images/Doctor.png';
 import nurseIcon from '../../assets/images/Nurse.png';
 import peopleIcon from '../../assets/images/people.png';
 import calendarIcon from '../../assets/images/calendar-2.png';
@@ -23,7 +23,7 @@ import { useSnackbar } from '../../components/hooks/useSnackbar';
 function MdDashboard() {
   const { showMessage } = useSnackbar();
   const [isLoader, setIsLoader] = useState(false);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<any>(null);
 
   useEffect(() => {
     // if (listingRolePermission(dataRole, 'Setting View')) {
@@ -51,34 +51,34 @@ function MdDashboard() {
       <TopBar title="Dashboard" />
       <div className="mx-auto mt-3 flex gap-4 max-[1260px]:flex-col">
         <div className="sm:w-full">
-          <div className="grid grid-cols-4 gap-4">
-            <DashboardCard
+          <div className="grid grid-cols-3 gap-4">
+            {/* <DashboardCard
               icon={doctorIcon}
               value="2.414"
               title="Total Doctor"
-            />
+            /> */}
             <DashboardCard
               icon={nurseIcon}
-              value="2.414"
+              value={data?.patients?.last7DaysPatients ?? '0'}
               title="New Patients"
             />
             <DashboardCard
               icon={peopleIcon}
-              value="2.414"
+              value={data?.patients?.total ?? '0'}
               title="Total Patients"
             />
             <DashboardCard
               icon={calendarIcon}
-              value="2.414"
+              value="4"
               title="New Appointment"
             />
           </div>
           <div className="alder-card-border mt-5 w-full">
-            <DashboardChartLine />
+            <DashboardChartLine data={data?.genderStats ?? []} />
           </div>
 
           <div className="alder-card-border mt-5 w-full">
-            <DashboardPatientData />
+            <DashboardPatientData data={data?.allPatients ?? []} />
           </div>
         </div>
 
@@ -88,8 +88,8 @@ function MdDashboard() {
           </LocalizationProvider>
           <div className="px-6">
             <Divider className="" />
-            <h4 className="mt-10">Upcoming Appointments</h4>
-            <DashboardAppointments />
+            {/* <h4 className="mt-10">Upcoming Appointments</h4>
+            <DashboardAppointments /> */}
           </div>
         </div>
       </div>

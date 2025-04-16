@@ -21,13 +21,18 @@ import { useSnackbar } from '../../components/hooks/useSnackbar';
 import { PATTERN } from '../../utils/constants';
 import CustomText from '../../components/common/CustomText';
 import Loader from '../../components/common/Loader2';
+import ErrorSpanBox from '../../components/common/ErrorSpanBox';
 
 const PatientLogVisitCreatePage = () => {
   const { state } = useLocation();
   const { showMessage } = useSnackbar();
   const navigate = useNavigate();
   const methods = useForm();
-  const { handleSubmit, register } = methods;
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = methods;
 
   const [isLoader, setIsLoader] = useState<boolean>(false);
   const [page, setPage] = useState(0);
@@ -95,12 +100,15 @@ const PatientLogVisitCreatePage = () => {
         }
       );
     }
+    // console.log('formadata', formData);
+
     service
       .createVisit(formData)
       .then((item) => {
         if (item.data.success) {
           showMessage(item.data.message, 'success');
           setIsLoader(false);
+          navigate(-1);
         } else {
           showMessage(item.data.message, 'error');
           setIsLoader(false);
@@ -194,6 +202,9 @@ const PatientLogVisitCreatePage = () => {
               minRows={4}
             />
           </FormControl>
+          {errors.medicalNote?.type === 'required' && (
+            <ErrorSpanBox error="Description / Medical note is required" />
+          )}
 
           <div className="mt-8">
             <div className="flex justify-end">

@@ -1,9 +1,9 @@
 import { Button, FormControl, FormGroup, Input } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import camera from '../../../assets/images/camera-dark.png';
 import ScanDiseaseWebCamModal from '../../scanDisease/ScanDieseaseWebCamModal';
 
-const PatientScanCard = ({ index, callback }: any) => {
+const PatientScanCard = ({ index, callback, defaultValue }: any) => {
   const [capturePreview, setCapturePreview] = useState<
     string | undefined | null
   >(null);
@@ -11,6 +11,22 @@ const PatientScanCard = ({ index, callback }: any) => {
   const [caption, setCaption] = useState('');
   const [webCam, setWebCam] = useState(false);
   const imageInput = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (defaultValue?.image) {
+      if (typeof defaultValue.image === 'string') {
+        setCapturePreview(defaultValue.image); // it's already a URL string
+      } else if (defaultValue.image instanceof File) {
+        const url = URL.createObjectURL(defaultValue.image);
+        setCapturePreview(url);
+        setCapturePreviewFile(defaultValue.image);
+      }
+    }
+
+    if (defaultValue?.caption) {
+      setCaption(defaultValue.caption);
+    }
+  }, [defaultValue]);
 
   const handleOpenCamera = () => {
     setWebCam(true);

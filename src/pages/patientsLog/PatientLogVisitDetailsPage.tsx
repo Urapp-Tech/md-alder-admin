@@ -10,6 +10,8 @@ const PatientLogVisitDetailsPage = () => {
   const { state } = useLocation();
   const { data } = state;
 
+  console.log('Datata', data);
+
   return (
     <>
       <TopBar title="Patient Profile" />

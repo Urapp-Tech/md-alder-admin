@@ -1845,7 +1845,7 @@ MD - AlDer Theme Styles
   @apply rounded-[10px];
 }
 .MuiButtonBase-root.MuiPickersDay-root.Mui-selected {
-  @apply bg-primary;
+  @apply bg-background;
 }
 
 /*

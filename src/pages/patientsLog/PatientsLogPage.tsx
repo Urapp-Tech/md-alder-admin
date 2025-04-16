@@ -1,9 +1,18 @@
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import { Button, TablePagination } from '@mui/material';
-import { faker } from '@faker-js/faker';
+import SearchIcon from '@mui/icons-material/Search';
+import {
+  Button,
+  Divider,
+  FormControl,
+  IconButton,
+  Input,
+  InputAdornment,
+  TablePagination,
+} from '@mui/material';
+// import { faker } from '@faker-js/faker';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import TopBar from '../../components/common/Md-Alder/TopBar';
 import photo from '../../assets/images/Photo.png';
 import EyeIcon from '../../components/icons/EyeIcon';
@@ -11,6 +20,7 @@ import CustomText from '../../components/common/CustomText';
 import service from '../../services/adminapp/adminPatient';
 import { useSnackbar } from '../../components/hooks/useSnackbar';
 import Loader from '../../components/common/Loader2';
+import CustomDateRangePicker from '../../components/common/CustomDateRangePicker';
 
 const PatientsLogPage = () => {
   const navigate = useNavigate();
@@ -20,11 +30,26 @@ const PatientsLogPage = () => {
   const [total, setTotal] = useState(0);
   const [list, setList] = useState<any>([]);
   const [search, setSearch] = useState('');
-  const [isLoader, setIsLoader] = useState(true);
+  const [isLoader, setIsLoader] = useState(false);
+
+  const [range, setRange] = useState<{
+    startDate: Dayjs | null;
+    endDate: Dayjs | null;
+  }>({
+    startDate: dayjs().startOf('month').subtract(6, 'month').startOf('month'),
+    endDate: dayjs().startOf('month').add(6, 'month').endOf('month'),
+  });
 
   useEffect(() => {
+    setIsLoader(true);
     service
-      .getList({ search, page, size: rowsPerPage })
+      .getList({
+        search,
+        page,
+        size: rowsPerPage,
+        startDate: range.startDate,
+        endDate: range.endDate,
+      })
       .then((item) => {
         if (item.data.success) {
           setIsLoader(false);
@@ -36,9 +61,25 @@ const PatientsLogPage = () => {
         }
       })
       .catch((err) => {
+        setIsLoader(false);
         showMessage(err.message, 'error');
       });
-  }, []);
+  }, [range]);
+
+  const handleClickSearch = (event: any) => {
+    if (event.key === 'Enter') {
+      const searchTxt = event.target.value as string;
+      const newPage = 0;
+      setSearch(searchTxt);
+      setPage(newPage);
+      service
+        .getList({ search: searchTxt, page, size: rowsPerPage })
+        .then((item) => {
+          setList(item.data.data.list);
+          setTotal(item.data.data.total);
+        });
+    }
+  };
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -80,7 +121,45 @@ const PatientsLogPage = () => {
                 Patient Data
               </h4>
             </div>
-            <div>
+            <div className="flex items-center">
+              <div className="h-[40px] rounded-xl border-[1px] border-foreground">
+                <CustomDateRangePicker
+                  // label="Select a Date Range"
+                  startDate={range.startDate}
+                  endDate={range.endDate}
+                  onChange={setRange}
+                />
+              </div>
+              <FormControl
+                className="search-grey-outline placeholder-grey mx-3 w-60"
+                variant="filled"
+              >
+                <Input
+                  className="input-with-icon after:border-b-secondary"
+                  id="search"
+                  type="text"
+                  placeholder="Search"
+                  onKeyDown={(
+                    event: React.KeyboardEvent<
+                      HTMLInputElement | HTMLTextAreaElement
+                    >
+                  ) => {
+                    handleClickSearch(event);
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <Divider
+                        sx={{ height: 28, m: 0.5 }}
+                        orientation="vertical"
+                      />
+                      <IconButton aria-label="toggle password visibility">
+                        <SearchIcon className="text-[#6A6A6A]" />
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  disableUnderline
+                />
+              </FormControl>
               <button
                 onClick={() => navigate('../create')}
                 className="flex h-[40px] w-[117px] items-center justify-center rounded-[10px] border-primary bg-background px-2 text-center text-primary shadow-md"
@@ -124,11 +203,11 @@ const PatientsLogPage = () => {
                             <img
                               src={e.avatar ? e.avatar : photo}
                               alt=""
-                              height={32}
-                              width={32}
-                              className="rounded-[8px] "
+                              // height={52}
+                              // width={42}
+                              className="mb-1 h-[30px] w-[32px] rounded-[5px]"
                             />
-                            <span className="ml-4 self-center font-an-gurmukhi font-medium text-secondary2">
+                            <span className="ml-2 self-center font-an-gurmukhi font-medium text-secondary2">
                               {e.name}
                             </span>
                           </div>
