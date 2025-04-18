@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   FormControl,
   TablePagination,
   TextareaAutosize,
@@ -51,7 +52,8 @@ const PatientLogVisitCreatePage = () => {
   ];
 
   const onSave = (data: any) => {
-    // console.log('Data', data);
+    console.log('Data', data);
+
     setIsLoader(true);
     const formData = new FormData();
     formData.append('patient', state.id);
@@ -88,6 +90,9 @@ const PatientLogVisitCreatePage = () => {
     formData.append('biopsy', data.biopsy || false);
     formData.append('radiology', data.radiology || false);
     formData.append('otherLabsDesc', data.otherLabsDesc || '');
+    if (data?.labMedia) {
+      data.labMedia.forEach((labfile: any) => formData.append(`lab`, labfile));
+    }
     if (data?.scanMedia) {
       data.scanMedia.forEach(
         (item: { image: File | null; caption: string }, index: number) => {
@@ -213,7 +218,11 @@ const PatientLogVisitCreatePage = () => {
                 className="rounded-xl border-background px-10 font-bold text-background"
                 onClick={handleSubmit(onSave)}
               >
-                Save
+                {isLoader ? (
+                  <CircularProgress size={20} className="text-background" />
+                ) : (
+                  <span className="">Save</span>
+                )}
               </Button>
             </div>
           </div>

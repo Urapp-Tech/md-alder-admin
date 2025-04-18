@@ -145,67 +145,96 @@ const PatientLogVisitDetailsPage = () => {
             <h4 className="alder-content-title capitalize underline underline-offset-2">
               Lab Test
             </h4>
-            <div className="mt-5 grid grid-cols-12">
+            <div className="grid grid-cols-12">
               {!data?.uce &&
                 !data?.cbc &&
                 !data?.urineDr &&
                 !data?.radiology &&
                 !data?.lft &&
                 !data?.biopsy &&
-                !data?.otherLabsDesc && (
+                !data?.otherLabsDesc &&
+                !data?.labMedia && (
                   <div className="col-span-12 text-secondary2">
                     No lab test needed
                   </div>
                 )}
               {data?.uce ? (
-                <div className="col-span-1 text-secondary2">
+                <div className="col-span-1 mt-2 text-secondary2">
                   <p>UCE</p>
                 </div>
               ) : (
                 ''
               )}
               {data?.cbc ? (
-                <div className="col-span-1 text-secondary2">
+                <div className="col-span-1 mt-2 text-secondary2">
                   <p>CBC</p>
                 </div>
               ) : (
                 ''
               )}
               {data?.urineDr ? (
-                <div className="col-span-1 text-secondary2">
+                <div className="col-span-1 mt-2 text-secondary2">
                   <p>Urine DR</p>
                 </div>
               ) : (
                 ''
               )}
               {data?.radiology ? (
-                <div className="col-span-1 text-secondary2">
+                <div className="col-span-1 mt-2 text-secondary2">
                   <p>Radiology</p>
                 </div>
               ) : (
                 ''
               )}
               {data?.lft ? (
-                <div className="col-span-1 text-secondary2">
+                <div className="col-span-1 mt-2 text-secondary2">
                   <p>LFT</p>
                 </div>
               ) : (
                 ''
               )}
               {data?.biopsy ? (
-                <div className="col-span-1 text-secondary2">
+                <div className="col-span-1 mt-2 text-secondary2">
                   <p>Biopsy</p>
                 </div>
               ) : (
                 ''
               )}
               {data?.otherLabsDesc ? (
-                <div className="col-span-1 text-secondary2">
+                <div className="col-span-1 mt-2 text-secondary2">
                   <p>{data?.otherLabsDesc}</p>
                 </div>
               ) : (
                 ''
               )}
+            </div>
+            <div className="mt-5 grid grid-cols-12 gap-9">
+              {data?.labMedia?.length &&
+                data.labMedia.map((e: any, i: number) => {
+                  const fileUrl = e.url;
+                  const ext = fileUrl.split('.').pop()?.toLowerCase();
+
+                  const isImage =
+                    ext === 'jpg' || ext === 'jpeg' || ext === 'png';
+
+                  return (
+                    <div key={i} className="col-span-2 text-center">
+                      {isImage ? (
+                        <img
+                          src={fileUrl}
+                          alt={`labMedia-${i}`}
+                          className="mx-auto h-[150px] w-[140px] object-contain"
+                        />
+                      ) : (
+                        <div className="flex h-[150px] w-[140px] items-center justify-center rounded border border-gray-300 bg-gray-100 text-sm text-gray-700">
+                          <a href={fileUrl} rel="noopener noreferrer">
+                            {ext?.toUpperCase()} File
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
             </div>
           </div>
 

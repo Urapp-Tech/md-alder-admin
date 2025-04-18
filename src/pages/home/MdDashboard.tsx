@@ -51,7 +51,7 @@ function MdDashboard() {
       <TopBar title="Dashboard" />
       <div className="mx-auto mt-3 flex gap-4 max-[1260px]:flex-col">
         <div className="sm:w-full">
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             {/* <DashboardCard
               icon={doctorIcon}
               value="2.414"
@@ -67,11 +67,11 @@ function MdDashboard() {
               value={data?.patients?.total ?? '0'}
               title="Total Patients"
             />
-            <DashboardCard
+            {/* <DashboardCard
               icon={calendarIcon}
               value="4"
               title="New Appointment"
-            />
+            /> */}
           </div>
           <div className="alder-card-border mt-5 w-full">
             <DashboardChartLine data={data?.genderStats ?? []} />

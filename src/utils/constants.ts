@@ -261,3 +261,13 @@ export const BARBER_SERVICES_AMOUNT = [
     name: '30',
   },
 ];
+
+export const mimiType: any = {
+  pdf: 'application/pdf',
+  word: 'application/msword',
+  wordsheet:
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  excel: 'application/vnd.ms-excel',
+  excelsheet:
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+};

@@ -1,5 +1,5 @@
 type Props = {
-  error?: string;
+  error?: string | any;
 };
 
 function ErrorSpanBox({ error }: Props) {

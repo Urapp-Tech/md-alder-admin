@@ -25,7 +25,6 @@ const PatientScan = () => {
   ]);
 
   const scanMedia = watch('scanMedia');
-  console.log('scanmedia', scanMedia);
 
   useEffect(() => {
     if (scanMedia && Array.isArray(scanMedia)) {
@@ -45,7 +44,7 @@ const PatientScan = () => {
     [setValue]
   );
 
-  console.log('scanData', scanData);
+  // console.log('scanData', scanData);
 
   return (
     <div className="container">

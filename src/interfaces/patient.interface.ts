@@ -42,6 +42,7 @@ export interface PatientVisitLabs {
   biopsy: string;
   radiology: string;
   otherLabsDesc: string;
+  labMedia: any;
 }
 
 export interface PatientVisitScan {
