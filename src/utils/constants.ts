@@ -271,3 +271,12 @@ export const mimiType: any = {
   excelsheet:
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 };
+
+export const ALL_PERMISSIONS = {
+  patients: {
+    view: 'view',
+    add: 'add',
+    edit: 'edit',
+    delete: 'delete',
+  },
+};

@@ -52,7 +52,7 @@ const PatientLogVisitCreatePage = () => {
   ];
 
   const onSave = (data: any) => {
-    console.log('Data', data);
+    // console.log('Data', data);
 
     setIsLoader(true);
     const formData = new FormData();

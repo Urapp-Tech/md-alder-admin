@@ -39,12 +39,14 @@ import {
 } from '../../redux/features/appStateSlice';
 import { logout } from '../../redux/features/authStateSlice';
 import { setRolePermissions } from '../../redux/features/permissionsStateSlice';
+import { ALL_PERMISSIONS } from '../../utils/constants';
+import { getItem } from '../../utils/storage';
 
 const links = [
   {
     name: 'Home',
     path: 'home',
-    permission: 'Dashboard List',
+    permission: '',
     icon: assets.images.home,
   },
   {
@@ -54,49 +56,14 @@ const links = [
     // icon: <SettingsOutlinedIcon fontSize="inherit" />,
     icon: assets.images.scan,
   },
-  // {
-  //   name: 'Patient Log',
-  //   path: 'patient-log',
-  //   permission: 'Setting View',
-  //   // icon: <SettingsOutlinedIcon fontSize="inherit" />,
-  //   icon: <ContentPasteIcon />,
-  // },
   {
     name: 'Patient',
     path: 'patient',
-    permission: 'Setting View',
+    permission: ALL_PERMISSIONS.patients.view,
     // icon: <SettingsOutlinedIcon fontSize="inherit" />,
     // icon: <PatientsIcon />,
     icon: assets.images.patient,
   },
-  // {
-  //   name: 'Doctor',
-  //   path: 'add-doctor',
-  //   permission: 'Setting View',
-  //   // icon: <SettingsOutlinedIcon fontSize="inherit" />,
-  //   icon: assets.images.patient,
-  // },
-  // {
-  //   name: 'Form Fields',
-  //   path: 'fields',
-  //   permission: 'Setting View',
-  //   // icon: <SettingsOutlinedIcon fontSize="inherit" />,
-  //   icon: assets.images.patient,
-  // },
-  // {
-  //   name: 'EditDoctor',
-  //   path: 'edit-doctor',
-  //   permission: 'Setting View',
-  //   // icon: <SettingsOutlinedIcon fontSize="inherit" />,
-  //   icon: <MedicationLiquidIcon />,
-  // },
-  // {
-  //   name: 'Doctor Profile',
-  //   path: 'doctor-profile',
-  //   permission: 'Setting View',
-  //   // icon: <SettingsOutlinedIcon fontSize="inherit" />,
-  //   icon: <MedicationLiquidIcon />,
-  // },
   {
     name: 'Settings',
     path: 'settings/app',
@@ -123,6 +90,8 @@ function Sidebar() {
   const authState: any = useAppSelector((state: any) => state?.authState);
   const dataRole = useAppSelector((state: any) => state);
   const [emptyVariable] = useState(null);
+
+  const userRole: any = getItem('USER');
 
   // const dispatch = useAppDispatch();
   // const logOut = () => {
@@ -233,27 +202,23 @@ function Sidebar() {
   }
 
   useEffect(() => {
-    // defineRules(dataRole?.persisitReducer?.roleState?.role?.permissions);
-    // if (dataRole?.persisitReducer?.roleState?.role?.permissions) {
-    //   const tempList = links.filter((el) => {
-    //     if (el.name === MODULE_EMPLOYEEES) {
-    //       if (appItems.employeeLimit <= 0) {
-    //         return null;
-    //       }
-    //     }
-    //     return CAN('canView', el.permission as string);
-    //   });
-    //   // console.log("templost", tempList);
-    //   tempList.unshift({
-    //     name: 'Dashboard',
-    //     path: 'home',
-    //     permission: 'Dashboard List',
-    //     icon: <GridViewOutlinedIcon fontSize="inherit" />,
-    //   });
-    //   setList(tempList);
-    // }
-    setList(links);
-  }, [emptyVariable, appItems?.employeeLimit]);
+    const userPermissions = userRole.role.permissions || [];
+    const filteredLinks = links.filter((link) => {
+      return userPermissions.some(
+        (userPermission: any) => userPermission.name === link.permission
+      );
+    });
+
+    const temp = [
+      {
+        name: 'Home',
+        path: 'home',
+        permission: '',
+        icon: assets.images.home,
+      },
+    ];
+    setList([...temp, ...filteredLinks]);
+  }, []);
 
   return (
     <Drawer
