@@ -165,7 +165,7 @@ const PatientsLogPage = () => {
                   disableUnderline
                 />
               </FormControl>
-              {hasPermission(`patient/${ALL_PERMISSIONS.patients.add}`) && (
+              {hasPermission(`${ALL_PERMISSIONS.patients.add}`) && (
                 <button
                   onClick={() => navigate('../create')}
                   className="flex h-[40px] w-[117px] items-center justify-center rounded-[10px] border-primary bg-background px-2 text-center text-primary shadow-md"
@@ -242,7 +242,7 @@ const PatientsLogPage = () => {
                             <EyeIcon className="h-[25px]" />
                           </Button>
                           {hasPermission(
-                            `patient/${ALL_PERMISSIONS.patients.edit}`
+                            `${ALL_PERMISSIONS.patients.edit}`
                           ) && (
                             <Button
                               onClick={() =>

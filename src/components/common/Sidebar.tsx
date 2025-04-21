@@ -52,7 +52,7 @@ const links = [
   {
     name: 'Scan Disease',
     path: 'scan-disease',
-    permission: 'Setting View',
+    permission: ALL_PERMISSIONS.scanDisease.view,
     // icon: <SettingsOutlinedIcon fontSize="inherit" />,
     icon: assets.images.scan,
   },
@@ -205,7 +205,9 @@ function Sidebar() {
     const userPermissions = userRole.role.permissions || [];
     const filteredLinks = links.filter((link) => {
       return userPermissions.some(
-        (userPermission: any) => userPermission.name === link.permission
+        (userPermission: any) =>
+          userPermission.action === link.permission &&
+          userPermission.showOnMenu === true
       );
     });
 

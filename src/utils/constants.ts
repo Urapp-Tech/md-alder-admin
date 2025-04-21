@@ -275,9 +275,15 @@ export const mimiType: any = {
 
 export const ALL_PERMISSIONS = {
   patients: {
-    view: 'view',
-    add: 'add',
-    edit: 'edit',
-    delete: 'delete',
+    view: 'patient/view',
+    add: 'patient/add',
+    edit: 'patient/edit',
+    delete: 'patient/delete',
+  },
+  scanDisease: {
+    view: 'scan-disease/view',
+    add: 'scan-disease/add',
+    edit: 'scan-disease/edit',
+    delete: 'scan-disease/delete',
   },
 };
