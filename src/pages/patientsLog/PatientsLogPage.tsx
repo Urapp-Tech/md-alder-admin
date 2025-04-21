@@ -22,10 +22,14 @@ import service from '../../services/adminapp/adminPatient';
 import { useSnackbar } from '../../components/hooks/useSnackbar';
 import Loader from '../../components/common/Loader2';
 import CustomDateRangePicker from '../../components/common/CustomDateRangePicker';
+import usePermission from '../../components/hooks/hasPermission';
+import { ALL_PERMISSIONS } from '../../utils/constants';
 
 const PatientsLogPage = () => {
   const navigate = useNavigate();
   const { showMessage } = useSnackbar();
+  const { hasPermission } = usePermission();
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [total, setTotal] = useState(0);
@@ -161,13 +165,15 @@ const PatientsLogPage = () => {
                   disableUnderline
                 />
               </FormControl>
-              <button
-                onClick={() => navigate('../create')}
-                className="flex h-[40px] w-[117px] items-center justify-center rounded-[10px] border-primary bg-background px-2 text-center text-primary shadow-md"
-              >
-                <AddOutlinedIcon fontSize="small" className="mr-0" />
-                <span className="mt-[5px] font-an-gurmukhi">Add</span>
-              </button>
+              {hasPermission(`patient/${ALL_PERMISSIONS.patients.add}`) && (
+                <button
+                  onClick={() => navigate('../create')}
+                  className="flex h-[40px] w-[117px] items-center justify-center rounded-[10px] border-primary bg-background px-2 text-center text-primary shadow-md"
+                >
+                  <AddOutlinedIcon fontSize="small" className="mr-0" />
+                  <span className="mt-[5px] font-an-gurmukhi">Add</span>
+                </button>
+              )}
             </div>
           </div>
 
@@ -235,15 +241,19 @@ const PatientsLogPage = () => {
                           >
                             <EyeIcon className="h-[25px]" />
                           </Button>
-                          <Button
-                            onClick={() =>
-                              navigate(`../edit/${e.id}`, {
-                                state: list[i],
-                              })
-                            }
-                          >
-                            <EditIcon className="h-[25px] text-secondary2" />
-                          </Button>
+                          {hasPermission(
+                            `patient/${ALL_PERMISSIONS.patients.edit}`
+                          ) && (
+                            <Button
+                              onClick={() =>
+                                navigate(`../edit/${e.id}`, {
+                                  state: list[i],
+                                })
+                              }
+                            >
+                              <EditIcon className="h-[25px] text-secondary2" />
+                            </Button>
+                          )}
                         </td>
                       </tr>
                     ))}

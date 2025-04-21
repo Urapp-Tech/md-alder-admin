@@ -64,13 +64,13 @@ const links = [
     // icon: <PatientsIcon />,
     icon: assets.images.patient,
   },
-  {
-    name: 'Settings',
-    path: 'settings/app',
-    permission: 'Setting View',
-    // permission: ALL_PERMISSIONS.storeSetting.viewSettings,
-    icon: assets.images.shopIcon,
-  },
+  // {
+  //   name: 'Settings',
+  //   path: 'settings/app',
+  //   permission: 'Setting View',
+  //   // permission: ALL_PERMISSIONS.storeSetting.viewSettings,
+  //   icon: assets.images.shopIcon,
+  // },
 ];
 
 function Sidebar() {
