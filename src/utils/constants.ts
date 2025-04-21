@@ -148,6 +148,7 @@ export const PATTERN = {
   CHAR_NUM_MINUS_AT_SPACE: /^[a-zA-Z0-9@ -]+$/,
   CHAR_NUM_MIN_AT_HASH_COM_DOT_SPA: /^[a-zA-Z0-9@,\-.# ]+$/,
   HOURS_MINTS_FORMAT: /^([0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/,
+  EMAIL: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
 
   // CHAR_NUM_DOT_AT: /^[A-Za-z0-9\s.@]+$/,
   // CHAR_NUM_DOT_AT: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, // used for email fields

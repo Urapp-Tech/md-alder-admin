@@ -294,36 +294,6 @@ const PatientLogVisitCreatePage = () => {
                   </>
                 )}
               </div>
-              {/* <div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th className="font-an-gurmukhi text-base font-medium text-secondary2">
-                        Visit
-                      </th>
-                      <th className="font-an-gurmukhi text-base font-medium text-secondary2">
-                        Medical note
-                      </th>
-                      <th>{}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="font-an-gurmukhi font-normal  text-secondary2">
-                        24, Apr, 2023
-                      </td>
-                      <td className="font-an-gurmukhi font-normal text-secondary2">
-                        I have screen allergy for 2 - 3 months
-                      </td>
-                      <td>
-                        <Button>
-                          <EyeIcon className="h-[25px]" />
-                        </Button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div> */}
             </div>
           </Tabs>
         </div>

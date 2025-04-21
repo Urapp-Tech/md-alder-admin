@@ -12,7 +12,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import SendIcon from '@mui/icons-material/Send';
 import { useForm } from 'react-hook-form';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SmileFace from '../../assets/images/smile-dark.png';
 import TopBar from '../../components/common/Md-Alder/TopBar';
 import { Patient } from '../../interfaces/patient.interface';
@@ -28,8 +28,9 @@ import CustomDropDown from '../../components/common/CustomDropDown';
 import CustomInputBox from '../../components/common/CustomInputBox';
 import { useSnackbar } from '../../components/hooks/useSnackbar';
 
-const PatientLogCreatePage = () => {
+const PatientLogEditPage = () => {
   const { showMessage } = useSnackbar();
+  const { state } = useLocation();
   const navigate = useNavigate();
   const [imagePreview, setImagePreview] = useState<string | undefined | null>(
     null
@@ -45,6 +46,9 @@ const PatientLogCreatePage = () => {
     reset,
     formState: { errors },
   } = useForm<Patient>();
+
+  const fullName = state?.name || '';
+  const [firstName = '', lastName = ''] = fullName.split(' ');
 
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e?.target?.files?.[0];
@@ -92,7 +96,7 @@ const PatientLogCreatePage = () => {
     formData.append('gender', data.gender);
     if (image) formData.append('avatar', image);
     service
-      .create(formData)
+      .update(state?.id, formData)
       .then((item) => {
         if (item.data.success) {
           showMessage(item.data.message, 'success');
@@ -105,16 +109,18 @@ const PatientLogCreatePage = () => {
       })
       .catch((err) => {
         setIsLoader(false);
-        showMessage(err.message, 'error');
+        showMessage(err.response.data.message, 'error');
       });
   };
 
   return (
     <>
-      <TopBar title="Add New Patient" />
+      <TopBar title="Update Patient" />
       <div className="mt-10 pr-5">
         <div className="alder-content ">
-          <h4 className="alder-content-title capitalize">Patient info form</h4>
+          <h4 className="alder-content-title capitalize">
+            Patient Update form
+          </h4>
           <form onSubmit={handleSubmit(onSubmitHandler)}>
             <div className="flex gap-5">
               <div className="w-2/3">
@@ -123,6 +129,7 @@ const PatientLogCreatePage = () => {
                     <Input
                       {...register('firstName', {
                         required: true,
+                        value: firstName,
                         pattern: PATTERN.CHAR_NUM_DASH,
                         validate: (value) => value.length <= 100,
                       })}
@@ -147,6 +154,7 @@ const PatientLogCreatePage = () => {
                     <Input
                       {...register('lastName', {
                         // required: true,
+                        value: lastName,
                         pattern: PATTERN.CHAR_NUM_DASH,
                         validate: (value) => value.length <= 100,
                       })}
@@ -178,6 +186,7 @@ const PatientLogCreatePage = () => {
                       setValue={setValue}
                       register={register}
                       options={{
+                        role: state?.gender,
                         roles: [
                           { id: 'male', name: 'Male' },
                           { id: 'female', name: 'Female' },
@@ -199,6 +208,7 @@ const PatientLogCreatePage = () => {
                       // inputTitle="Phone"
                       placeholder="+92345345345"
                       id="phone"
+                      value={state?.phone}
                       customFontClass="font-semibold mb-1"
                       customClass="alder-form-control"
                       register={register}
@@ -216,6 +226,7 @@ const PatientLogCreatePage = () => {
                       pattern={PATTERN.EMAIL}
                       placeholder="johnsmith@gmail.com"
                       id="email"
+                      value={state?.email}
                       customFontClass="font-semibold mb-1"
                       customClass="alder-form-control"
                       register={register}
@@ -234,9 +245,11 @@ const PatientLogCreatePage = () => {
                       // inputTitle="Phone"
                       placeholder="Enter age ex: 34"
                       id="age"
+                      value={state?.age}
                       customFontClass="font-semibold mb-1"
                       customClass="alder-form-control"
                       register={register}
+                      requiredType
                       error={errors.age}
                       inputType="number"
                       typeImportant
@@ -246,6 +259,7 @@ const PatientLogCreatePage = () => {
                     <Input
                       {...register('occupation', {
                         // required: true,
+                        value: state?.occupation,
                         pattern: PATTERN.CHAR_NUM_DASH,
                         validate: (value) => value.length <= 50,
                       })}
@@ -269,6 +283,7 @@ const PatientLogCreatePage = () => {
                     <Input
                       {...register('address', {
                         // required: true,
+                        value: state?.address,
                         pattern: PATTERN.CHAR_NUM_DASH,
                         validate: (value) => value.length <= 100,
                       })}
@@ -305,7 +320,7 @@ const PatientLogCreatePage = () => {
                       defaultValue=""
                       placeholder="Write Note..."
                       {...register('desc', {
-                        required: 'Description is required',
+                        value: state?.desc,
                         maxLength: {
                           value: 250,
                           message: MAX_LENGTH_EXCEEDED,
@@ -327,6 +342,13 @@ const PatientLogCreatePage = () => {
                         document?.getElementById('imageInput')?.click()
                       }
                     >
+                      {!imagePreview && state?.avatar && (
+                        <img
+                          src={state?.avatar || ''}
+                          alt="Preview"
+                          className="max-h-[400px] w-full"
+                        />
+                      )}
                       {imagePreview && (
                         <img
                           src={imagePreview}
@@ -356,20 +378,24 @@ const PatientLogCreatePage = () => {
                           }}
                           style={{ display: 'none' }}
                         />
-                        <div className="flex w-full justify-center">
-                          <img
-                            src={SmileFace}
-                            alt="Upload"
-                            className="h-[63px]"
-                          />
-                        </div>
-                        <h2 className="mt-5">Upload Image</h2>
+                        {state?.avatar === null && (
+                          <>
+                            <div className="flex w-full justify-center">
+                              <img
+                                src={SmileFace}
+                                alt="Upload"
+                                className="h-[63px]"
+                              />
+                            </div>
+                            <h2 className="mt-5">Upload Image</h2>
+                          </>
+                        )}
                       </div>
                     </div>
 
                     <div className="mt-8">
                       <div className="flex justify-end">
-                        <button
+                        {/* <button
                           onClick={() => {
                             setImagePreview(null);
                             setImage(null);
@@ -381,7 +407,7 @@ const PatientLogCreatePage = () => {
                             className="mr-2 text-background"
                           />
                           <span className="mt-1">Reset</span>
-                        </button>
+                        </button> */}
                         <button
                           type="submit"
                           className="flex h-[40px] w-[117px] items-center justify-center rounded-[10px] border-primary bg-background px-2 text-center text-primary"
@@ -394,7 +420,7 @@ const PatientLogCreatePage = () => {
                           ) : (
                             <>
                               <SendIcon fontSize="inherit" className="mr-2" />
-                              <span className="mt-1">Save</span>
+                              <span className="mt-1">Update</span>
                             </>
                           )}
                         </button>
@@ -411,4 +437,4 @@ const PatientLogCreatePage = () => {
   );
 };
 
-export default PatientLogCreatePage;
+export default PatientLogEditPage;

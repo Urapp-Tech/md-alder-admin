@@ -87,7 +87,7 @@ const PatientPrescription = () => {
           <FormControl className="FormControl" variant="standard">
             <Input
               {...register('drugName', {
-                required: true,
+                // required: true,
                 pattern: PATTERN.CHAR_NUM_DASH,
                 validate: (value) => value.length <= 100,
               })}
@@ -142,7 +142,7 @@ const PatientPrescription = () => {
           <FormControl className="FormControl" variant="standard">
             <Input
               {...register('strength', {
-                required: true,
+                // required: true,
                 pattern: PATTERN.CHAR_NUM_DASH,
                 validate: (value) => value.length <= 100,
               })}
@@ -179,7 +179,7 @@ const PatientPrescription = () => {
           <FormControl className="FormControl" variant="standard">
             <Input
               {...register('dose', {
-                required: true,
+                // required: true,
                 pattern: PATTERN.CHAR_NUM_DASH,
                 validate: (value) => value.length <= 100,
               })}

@@ -63,6 +63,7 @@ import DoctorsCreatePage from '../pages/doctors/DoctorsCreatePage';
 import DoctorsProfilePage from '../pages/doctors/DoctorsProfilePage';
 import DoctorsEditPage from '../pages/doctors/DoctorsEditPage';
 import FormFieldsPage from '../pages/formFields/FormFieldsPage';
+import PatientLogEditPage from '../pages/patientsLog/PatientLogEditPage';
 
 export const routeObjects: RouteObject[] = [
   {
@@ -436,6 +437,10 @@ export const routeObjects: RouteObject[] = [
               {
                 path: 'create',
                 element: <PatientLogCreatePage />,
+              },
+              {
+                path: 'edit/:id',
+                element: <PatientLogEditPage />,
               },
               {
                 path: 'profile/:id',

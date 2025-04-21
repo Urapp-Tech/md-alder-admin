@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import TopBar from '../../components/common/Md-Alder/TopBar';
 import PatientProfileInfo from '../../components/common/Md-Alder/PatientLog/PatientProfileInfo';
 // import ScanImage from '../../assets/images/scan-image.png';
-import PdfIcon from '../../components/icons/PdfIcon';
+// import PdfIcon from '../../components/icons/PdfIcon';
 
 const PatientLogVisitDetailsPage = () => {
   const { state } = useLocation();
@@ -53,7 +53,7 @@ const PatientLogVisitDetailsPage = () => {
             </div>
             <div className="col-span-2 text-right">
               <IconButton className="rounded-lg border border-solid border-primary">
-                <PdfIcon className="h-[35px]" />
+                {/* <PdfIcon className="h-[35px]" /> */}
               </IconButton>
             </div>
           </div>
@@ -153,7 +153,7 @@ const PatientLogVisitDetailsPage = () => {
                 !data?.lft &&
                 !data?.biopsy &&
                 !data?.otherLabsDesc &&
-                !data?.labMedia && (
+                data?.labMedia?.length <= 0 && (
                   <div className="col-span-12 text-secondary2">
                     No lab test needed
                   </div>
@@ -209,32 +209,33 @@ const PatientLogVisitDetailsPage = () => {
               )}
             </div>
             <div className="mt-5 grid grid-cols-12 gap-9">
-              {data?.labMedia?.length &&
-                data.labMedia.map((e: any, i: number) => {
-                  const fileUrl = e.url;
-                  const ext = fileUrl.split('.').pop()?.toLowerCase();
+              {data?.labMedia?.length
+                ? data.labMedia.map((e: any, i: number) => {
+                    const fileUrl = e.url;
+                    const ext = fileUrl.split('.').pop()?.toLowerCase();
 
-                  const isImage =
-                    ext === 'jpg' || ext === 'jpeg' || ext === 'png';
+                    const isImage =
+                      ext === 'jpg' || ext === 'jpeg' || ext === 'png';
 
-                  return (
-                    <div key={i} className="col-span-2 text-center">
-                      {isImage ? (
-                        <img
-                          src={fileUrl}
-                          alt={`labMedia-${i}`}
-                          className="mx-auto h-[150px] w-[140px] object-contain"
-                        />
-                      ) : (
-                        <div className="flex h-[150px] w-[140px] items-center justify-center rounded border border-gray-300 bg-gray-100 text-sm text-gray-700">
-                          <a href={fileUrl} rel="noopener noreferrer">
-                            {ext?.toUpperCase()} File
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+                    return (
+                      <div key={i} className="col-span-2 text-center">
+                        {isImage ? (
+                          <img
+                            src={fileUrl}
+                            alt={`labMedia-${i}`}
+                            className="mx-auto h-[150px] w-[140px] object-contain"
+                          />
+                        ) : (
+                          <div className="flex h-[150px] w-[140px] items-center justify-center rounded border border-gray-300 bg-gray-100 text-sm text-gray-700">
+                            <a href={fileUrl} rel="noopener noreferrer">
+                              {ext?.toUpperCase()} File
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })
+                : ''}
             </div>
           </div>
 
@@ -244,27 +245,29 @@ const PatientLogVisitDetailsPage = () => {
               Scan Images
             </h4>
             <div className="mt-5 grid grid-cols-12 gap-9">
-              {data?.scanMedia?.length
-                ? data?.scanMedia?.map((e: any, i: number) => {
-                    return (
-                      <div key={i} className="col-span-2">
-                        <span className="mb-5 block text-sm font-medium capitalize text-[#A9A9A9]">
-                          {e.caption}
-                        </span>
-                        <img
-                          src={e.url}
-                          alt="scanImage"
-                          className="h-[150px] w-[140px] object-contain"
-                        />
-                      </div>
-                    );
-                  })
-                : 'No Images'}
+              {data?.scanMedia?.length ? (
+                data?.scanMedia?.map((e: any, i: number) => {
+                  return (
+                    <div key={i} className="col-span-2">
+                      <span className="mb-5 block text-sm font-medium capitalize text-[#A9A9A9]">
+                        {e.caption}
+                      </span>
+                      <img
+                        src={e.url}
+                        alt="scanImage"
+                        className="h-[150px] w-[140px] object-contain"
+                      />
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="col-span-4">No Images</div>
+              )}
             </div>
           </div>
 
           {/* Previous Visit */}
-          <div className="mt-5">
+          {/* <div className="mt-5">
             <h4 className="alder-content-title capitalize  underline underline-offset-2">
               Previous Visit
             </h4>
@@ -278,6 +281,50 @@ const PatientLogVisitDetailsPage = () => {
                 <p>I have skin allergy for 2 3 months</p>
               </div>
             </div>
+          </div> */}
+          <div className="table-responsive mt-2">
+            <h4 className="alder-content-title capitalize  underline underline-offset-2">
+              Previous Visit
+            </h4>
+            <table>
+              <thead className="capitalize">
+                <tr>
+                  <th className="font-an-gurmukhi text-secondary2">S# No.</th>
+                  <th className="font-an-gurmukhi text-secondary2">
+                    Visit Date
+                  </th>
+                  <th className="font-an-gurmukhi text-secondary2">
+                    Medical Note
+                  </th>
+                  <th>{}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {state?.previousVisit
+                  ?.filter((x: any) => x.id !== data.id)
+                  ?.sort(
+                    (a: any, b: any) =>
+                      new Date(b.createdAt).getTime() -
+                      new Date(a.createdAt).getTime()
+                  )
+                  ?.slice(0, 3)
+                  ?.map((e: any, i: number) => (
+                    <tr key={i}>
+                      <td>
+                        <div className="font-an-gurmukhi text-base font-medium text-secondary2">
+                          <p>{i + 1}</p>
+                        </div>
+                      </td>
+                      <td className="font-an-gurmukhi text-base font-medium text-secondary2">
+                        {dayjs(e.createdAt).format('DD MMMM, YYYY')}
+                      </td>
+                      <td className="font-an-gurmukhi text-base font-medium text-secondary2">
+                        {e.medicalNote}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

@@ -77,7 +77,7 @@ const PatientScanCard = ({ index, callback, defaultValue }: any) => {
         )}
       </div>
       <div className="mt-5 grid grid-cols-12 items-center gap-2">
-        <div className="col-span-6">
+        <div className="col-span-9">
           <FormGroup>
             <FormControl fullWidth>
               <Input
@@ -105,22 +105,22 @@ const PatientScanCard = ({ index, callback, defaultValue }: any) => {
             Upload
           </Button> */}
         </div>
-        <div className="col-span-3">
-          <Button
+        {/* <div className="col-span-3"> */}
+        {/* <Button
             variant="outlined"
             onClick={handleOpenCamera}
             className="h-[45px] w-full rounded-xl border-2 border-background text-background"
           >
             Retake
-          </Button>
-          {/* <Button
+          </Button> */}
+        {/* <Button
             variant="outlined"
             onClick={handleOpenCamera}
             className=" rounded-10 w-full border-primary py-3 font-bold capitalize text-primary"
           >
             Retake
           </Button> */}
-        </div>
+        {/* </div> */}
       </div>
       <ScanDiseaseWebCamModal
         open={webCam}

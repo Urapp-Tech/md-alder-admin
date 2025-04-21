@@ -70,7 +70,7 @@ function LoginPage() {
         dispatch(setShopTenantState(tenantConfig));
       } else {
         setIsLoader(false);
-        showMessage(user.data.message, 'success');
+        showMessage(user.data.message, 'error');
       }
     } catch (err: Error | any) {
       setIsLoader(false);

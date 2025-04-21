@@ -10,6 +10,7 @@ import {
   TablePagination,
 } from '@mui/material';
 // import { faker } from '@faker-js/faker';
+import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
@@ -224,7 +225,7 @@ const PatientsLogPage = () => {
                         <td className="font-an-gurmukhi text-secondary2">
                           {dayjs(e.createdAt).format('YYYY-MM-DD, hh:mm A')}
                         </td>
-                        <td className="font-an-gurmukhi text-secondary2">
+                        <td className="flex font-an-gurmukhi text-secondary2">
                           <Button
                             onClick={() =>
                               navigate(`../profile/${e.id}`, {
@@ -233,6 +234,15 @@ const PatientsLogPage = () => {
                             }
                           >
                             <EyeIcon className="h-[25px]" />
+                          </Button>
+                          <Button
+                            onClick={() =>
+                              navigate(`../edit/${e.id}`, {
+                                state: list[i],
+                              })
+                            }
+                          >
+                            <EditIcon className="h-[25px] text-secondary2" />
                           </Button>
                         </td>
                       </tr>

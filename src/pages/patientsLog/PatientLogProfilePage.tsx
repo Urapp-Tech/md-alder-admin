@@ -139,7 +139,11 @@ const PatientLogProfilePage = () => {
                             <Button
                               onClick={() =>
                                 navigate(`../visit-details/${state.id}`, {
-                                  state: { data: list[i], user: state },
+                                  state: {
+                                    data: list[i],
+                                    user: state,
+                                    previousVisit: list,
+                                  },
                                 })
                               }
                             >

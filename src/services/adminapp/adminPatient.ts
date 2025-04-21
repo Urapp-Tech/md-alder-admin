@@ -10,6 +10,10 @@ const create = (data: any) => {
   return network.postMultipart(`${PATIENT_PREFIX}/create`, data);
 };
 
+const update = (id: any, data: any) => {
+  return network.postMultipart(`${PATIENT_PREFIX}/update/${id}`, data);
+};
+
 const getListVisit = (qp: any) => {
   return network.get(`${PATIENT_PREFIX}/visit/list`, qp);
 };
@@ -21,6 +25,7 @@ const createVisit = (data: any) => {
 export default {
   getList,
   create,
+  update,
   getListVisit,
   createVisit,
 };

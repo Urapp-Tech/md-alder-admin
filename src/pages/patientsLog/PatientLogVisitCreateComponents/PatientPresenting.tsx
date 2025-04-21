@@ -84,27 +84,7 @@ const PatientPresenting = ({ callback }: any) => {
       );
   }, [startDuration, endDuration, followUpDuration]);
 
-  // const onSubmitHandler = (data: PatientVisitComplaints) => {
-  //   console.log('data', data);
-
-  //   // setIsLoader(true);
-  //   // service
-  //   //   .create(formData)
-  //   //   .then((item) => {
-  //   //     if (item.data.success) {
-  //   //       showMessage(item.data.message, 'success');
-  //   //       setIsLoader(false);
-  //   //     } else {
-  //   //       showMessage(item.data.message, 'error');
-  //   //       setIsLoader(false);
-  //   //     }
-  //   //   })
-  //   //   .catch((err) => {
-  //   //     showMessage(err.message, 'error');
-  //   //   });
-  // };
   return (
-    // <form onSubmit={handleSubmit(onSubmitHandler)}>
     <>
       <div className="mt-3 grid grid-cols-12 gap-10">
         <FormGroup className="col-span-12 md:col-span-6">
@@ -203,6 +183,7 @@ const PatientPresenting = ({ callback }: any) => {
           <FormControl className="FormControl" variant="standard">
             <Input
               {...register('symptoms', {
+                required: 'Symptoms is required',
                 pattern: PATTERN.CHAR_NUM_DASH,
                 validate: (value) => value.length <= 100,
               })}
@@ -212,6 +193,9 @@ const PatientPresenting = ({ callback }: any) => {
               placeholder="Type here"
               disableUnderline
             />
+            {errors.symptoms?.type === 'required' && (
+              <ErrorSpanBox error={errors.symptoms?.message} />
+            )}
             {errors.symptoms?.type === 'pattern' && (
               <ErrorSpanBox error={INVALID_CHAR} />
             )}
@@ -227,7 +211,7 @@ const PatientPresenting = ({ callback }: any) => {
           </FormLabel>
           <FormControl fullWidth variant="standard">
             <CustomDropDown
-              // validateRequired
+              validateRequired
               id="diagnose"
               control={control}
               error={errors}
@@ -268,7 +252,7 @@ const PatientPresenting = ({ callback }: any) => {
           </FormLabel>
           <FormControl fullWidth variant="standard">
             <CustomDropDown
-              // validateRequired
+              validateRequired
               id="differentialDiagnose"
               control={control}
               error={errors}
@@ -312,7 +296,7 @@ const PatientPresenting = ({ callback }: any) => {
               <Controller
                 name="durationStartTime"
                 control={control}
-                // rules={{ required: 'Start duration is required' }}
+                rules={{ required: 'Start duration is required' }}
                 render={({ field }) => (
                   <DatePickerField
                     id="durationStartTime"
@@ -324,6 +308,9 @@ const PatientPresenting = ({ callback }: any) => {
               />
             </LocalizationProvider>
           </FormControl>
+          {errors.durationStartTime?.type === 'required' && (
+            <ErrorSpanBox error={errors.durationStartTime?.message} />
+          )}
         </FormGroup>
 
         <FormGroup className="col-span-12 md:col-span-3">
@@ -335,7 +322,7 @@ const PatientPresenting = ({ callback }: any) => {
               <Controller
                 name="durationEndTime"
                 control={control}
-                // rules={{ required: 'End duration is required' }}
+                rules={{ required: 'End duration is required' }}
                 render={({ field }) => (
                   <DatePickerField
                     id="durationEndTime"
@@ -347,6 +334,9 @@ const PatientPresenting = ({ callback }: any) => {
               />
             </LocalizationProvider>
           </FormControl>
+          {errors.durationEndTime?.type === 'required' && (
+            <ErrorSpanBox error={errors.durationEndTime?.message} />
+          )}
         </FormGroup>
 
         <FormGroup className="col-span-12 md:col-span-6">
@@ -358,7 +348,7 @@ const PatientPresenting = ({ callback }: any) => {
               <Controller
                 name="followupTime"
                 control={control}
-                // rules={{ required: 'followup Time is required' }}
+                rules={{ required: 'followup Time is required' }}
                 render={({ field }) => (
                   <DatePickerField
                     id="followupTime"
@@ -370,6 +360,9 @@ const PatientPresenting = ({ callback }: any) => {
               />
             </LocalizationProvider>
           </FormControl>
+          {errors.followupTime?.type === 'required' && (
+            <ErrorSpanBox error={errors.followupTime?.message} />
+          )}
         </FormGroup>
       </div>
       {/* <div className="mt-10 flex items-center justify-end"> */}
