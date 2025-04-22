@@ -14,12 +14,16 @@ interface ScanDiseaseWebCamModalProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setImage: React.Dispatch<React.SetStateAction<string | undefined | null>>;
+  setCaptureFile: React.Dispatch<
+    React.SetStateAction<string | undefined | null>
+  >;
 }
 
 const WebCamModal: React.FC<ScanDiseaseWebCamModalProps> = ({
   open,
   setOpen,
   setImage,
+  setCaptureFile,
 }) => {
   const webcamRef = React.useRef<Webcam>(null);
   const handleClose = () => setOpen(false);
@@ -27,8 +31,31 @@ const WebCamModal: React.FC<ScanDiseaseWebCamModalProps> = ({
   const capture = React.useCallback(() => {
     setImage(webcamRef?.current?.getScreenshot());
     handleClose();
+
+    const imageSrc = webcamRef?.current?.getScreenshot();
+    if (imageSrc) {
+      // Convert base64 to Blob and then to File
+      const byteString = atob(imageSrc.split(',')[1]);
+      const mimeString = imageSrc.split(',')[0].split(':')[1].split(';')[0];
+
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+
+      const blob = new Blob([ab], { type: mimeString });
+      const file: any = new File([blob], `capture-${Date.now()}.jpg`, {
+        type: mimeString,
+      });
+
+      setCaptureFile(file);
+      handleClose();
+    }
     // const imageSrc = webcamRef?.current?.getScreenshot();
   }, [webcamRef]);
+
   return (
     <Modal open={open} onClose={handleClose}>
       <div className="modal h-auto">
