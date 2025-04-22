@@ -122,11 +122,11 @@ const PatientScanCard = ({ index, callback, defaultValue }: any) => {
           </Button> */}
         {/* </div> */}
       </div>
-      <ScanDiseaseWebCamModal
+      {/* <ScanDiseaseWebCamModal
         open={webCam}
         setOpen={setWebCam}
         setImage={setCapturePreview}
-      />
+      /> */}
     </div>
   );
 };
