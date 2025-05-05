@@ -82,7 +82,7 @@ const PatientPrescription = () => {
       <div className="mt-3 grid grid-cols-12  gap-5">
         <FormGroup className="col-span-12 md:col-span-4">
           <FormLabel className="mb-5 text-base font-medium text-black">
-            Drug Nmae
+            Drug Name
           </FormLabel>
           <FormControl className="FormControl" variant="standard">
             <Input
@@ -257,8 +257,8 @@ const PatientPrescription = () => {
         <div className="col-span-12">
           <div className="flex justify-end">
             <Button
-              variant="outlined"
-              className="rounded-xl border-background px-10 font-bold text-background"
+              variant="contained"
+              className="rounded-xl border-background bg-background px-10 font-bold text-foreground hover:!text-foreground"
               onClick={() => handlePrescriptions()}
             >
               Add

@@ -1,171 +1,143 @@
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
 import assets from '../../../assets';
-import auth from '../../../services/adminapp/admin';
 import ErrorSpanBox from '../../../components/common/ErrorSpanBox';
-import {
-  INVALID_CHAR,
-  MAX_LENGTH_EXCEEDED,
-  PATTERN,
-} from '../../../utils/constants';
-import Notify from '../../../components/common/Notify';
-import { useNotification } from '../../../components/Contexts/NotificationContext';
-import { useAppSelector } from '../../../redux/redux-hooks';
-
-interface Email {
-  email: string;
-}
+// import { setItemState, setLogo } from '../../../redux/features/appStateSlice';
+import { useSnackbar } from '../../../components/hooks/useSnackbar';
+import auth from '../../../services/adminapp/admin';
 
 function ForgotPasswordPage() {
+  const { showMessage } = useSnackbar();
   const navigate = useNavigate();
-  const systemConfig = useAppSelector(
-    (state: any) => state.authState.systemConfig
-  );
-  // const [email, setEmail] = useState('');
-  // const [error, setError] = useState('');
-
-  // const getCodeHandler = () => {
-  //   if (email && error === '') {
-  //     navigate('../otp-verification');
-  //   }
-  // };
   const [isLoader, setIsLoader] = useState(false);
-  const { notification, hideNotification, showNotification } =
-    useNotification();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Email>();
+  } = useForm<any>();
 
-  const sendEmail = async (data: Email) => {
+  const submitHandler = async (data: { email: string }) => {
     setIsLoader(true);
-    auth
-      .getOtpService(data)
-      .then((res) => {
-        if (res.data.success) {
-          setIsLoader(false);
-          setTimeout(() => {
-            showNotification(res.data.message, 'success');
-            navigate('../otp-verification', { state: { email: data.email } });
-          }, 500);
-          // navigate('../otp-verification', { state: { email: data.email, message: res.data.message } })
-        } else {
-          setIsLoader(false);
-          showNotification(res.data.message, 'error');
-        }
-      })
-      .catch((err: Error) => {
+    const userData: { email: string } = {
+      email: data.email,
+    };
+    try {
+      const res = await auth.getOtpService(userData);
+      if (res.data.success) {
         setIsLoader(false);
-        showNotification(err.message, 'error');
-      });
+        navigate('../otp-verification', {
+          state: { email: data.email, otp: res.data.data.otp },
+        });
+      } else {
+        setIsLoader(false);
+        showMessage(res.data.message, 'error');
+      }
+    } catch (err: Error | any) {
+      setIsLoader(false);
+      showMessage(err?.response?.data?.message, 'error');
+    }
   };
 
   return (
-    <>
-      <div className="flex h-full w-full items-center justify-center bg-[#F0F0F0]">
-        <div className="mx-auto  flex w-full  items-start justify-around max-[1560px]:items-center">
-          <div className="w-[30%] self-start px-[30px]">
-            <div className="max-h-[29px] w-full max-w-[150px] px-[25px] py-[40px]">
-              <img
-                src={systemConfig?.shopLogo ?? systemConfig?.shopName}
-                alt="urlaundry"
-                className="h-auto w-full object-contain"
-              />
-            </div>
-            <div className="pt-[100px]">
-              {/* <h1 className='text-[36px] text-black leading-[normal] font-bold capitalize mb-4 text-center'>log in</h1> */}
-              <div className=" text-center">
-                <img
-                  src={assets.images.envelopeMsg}
-                  alt="email"
-                  className="h-[100[px] mx-auto w-[100px]"
-                />
-              </div>
-              <form onSubmit={handleSubmit(sendEmail)}>
-                <div className="mt-2 ">
-                  <span className="block text-center text-[14px] font-normal leading-[normal] text-[#6A6A6A]">
-                    Enter registered email
-                  </span>
-                  <span className="block text-center text-[14px] font-normal leading-[normal] text-[#6A6A6A]">
-                    to receive OTP verification code
-                  </span>
-                  <div className="form-group mt-[42px] w-full">
-                    <label
-                      htmlFor="email"
-                      className="mb-1 text-[14px] font-normal leading-[normal] text-[#06152B]"
-                    >
-                      Email
-                    </label>
-                    <FormControl className="m-1 w-full" variant="standard">
-                      <Input
-                        className="border-1 border-solid border-[#949EAE]"
-                        {...register('email', {
-                          required: true,
-                          pattern: PATTERN.CHAR_NUM_DOT_AT,
-                          validate: (value) => value.length <= 100,
-                        })}
-                        type="text"
-                        id="email"
-                        placeholder="Enter your email"
-                        disableUnderline
-                      />
-                      {errors.email?.type === 'required' && (
-                        <ErrorSpanBox error="Email is required" />
-                      )}
-                      {errors.email?.type === 'pattern' && (
-                        <ErrorSpanBox error={INVALID_CHAR} />
-                      )}
-                      {errors.email?.type === 'validate' && (
-                        <ErrorSpanBox error={MAX_LENGTH_EXCEEDED} />
-                      )}
-                    </FormControl>
-                  </div>
-                  <div className="w-full px-4 xl:mt-[60px] 2xl:mt-[100px] ">
-                    <Button
-                      disabled={isLoader}
-                      className="w-full bg-neutral-900 px-16 py-2 text-gray-50"
-                      variant="contained"
-                      color="inherit"
-                      title="get code"
-                      type="submit"
-                    >
-                      {isLoader ? (
-                        <CircularProgress color="inherit" size={23} />
-                      ) : (
-                        'Get Code'
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div className="w-[70%] px-3 py-2">
-            <div className="mx-auto  flex max-h-[834px] items-center justify-center overflow-hidden rounded-lg max-[1560px]:max-h-[96vh]">
-              <img
-                src={systemConfig?.logoffImage || assets.images.bgLogin}
-                alt="urlaundry"
-                className="h-full w-full object-contain"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      {notification && (
-        <Notify
-          isOpen
-          setIsOpen={hideNotification}
-          displayMessage={notification}
+    <div className="relative h-full w-full bg-background">
+      <div className="absolute top-[20px] left-[56px]">
+        <img
+          src={assets.images.loginVectorOne}
+          alt="vector-one"
+          className="h-[520px] object-contain 2xl:h-[800px]"
         />
-      )}
-    </>
+      </div>
+      <div className="absolute top-[0px] right-[0px]">
+        <img
+          src={assets.images.loginVectorTwo}
+          alt="vector-one"
+          className="h-[260px] object-contain"
+        />
+      </div>
+      <div className="absolute bottom-[200px] right-[230px] 2xl:bottom-[450px]">
+        <img
+          src={assets.images.loginVectorFour}
+          alt="vector-one"
+          className="h-[70px] object-contain"
+        />
+      </div>
+      <div className="absolute bottom-[55px] right-[100px]">
+        <img
+          src={assets.images.loginVectorFive}
+          alt="vector-one"
+          className="h-[100px] object-contain"
+        />
+      </div>
+      <div className="absolute bottom-[0px] left-[0px]">
+        <img
+          src={assets.images.loginVectorThree}
+          alt="vector-one"
+          className="h-[100px] object-contain"
+        />
+      </div>
+      <div className="flex h-full items-center justify-center">
+        <form
+          className="z-10 h-[480px] w-[473px] rounded-2xl bg-primary py-10 px-5"
+          onSubmit={handleSubmit(submitHandler)}
+        >
+          <div className="">
+            <div className="flex items-center justify-center">
+              <img
+                src={assets.images.mdalderIcon}
+                alt="mdalder-icon"
+                className="object-contain"
+              />
+            </div>
+            <div className="form-group mt-5 flex w-full items-center justify-center text-center">
+              <span>
+                Enter registered email <br />
+                to receive password reset link
+              </span>
+            </div>
+            <div className="form-group mt-5 w-full">
+              <span className="my-2 block font-an-gurmukhi text-[16px] font-normal leading-[normal] text-secondary2">
+                Email Address
+              </span>
+              <FormControl className="m-1 h-full w-full" variant="standard">
+                <Input
+                  className="h-[50px] text-secondary2"
+                  id="email"
+                  type="email"
+                  {...register('email', {
+                    required: 'Please enter your email.',
+                  })}
+                  placeholder="example@urapptech.com"
+                  disableUnderline
+                />
+                {errors.email && <ErrorSpanBox error={errors.email?.message} />}
+              </FormControl>
+            </div>
+            <div className="mt-8 w-full px-4">
+              <Button
+                disabled={!!isLoader}
+                className="w-full rounded-2xl bg-background px-16 py-4 text-primary"
+                variant="contained"
+                color="inherit"
+                title="Get Code"
+                type="submit"
+              >
+                {!isLoader ? (
+                  `Get Code`
+                ) : (
+                  <CircularProgress color="inherit" size={24} />
+                )}
+              </Button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
 

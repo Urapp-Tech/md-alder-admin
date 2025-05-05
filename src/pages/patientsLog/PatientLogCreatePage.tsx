@@ -123,7 +123,7 @@ const PatientLogCreatePage = () => {
                     <Input
                       {...register('firstName', {
                         required: true,
-                        pattern: PATTERN.CHAR_NUM_DASH,
+                        pattern: PATTERN.CHAR_SPACE_DASH_TWO,
                         validate: (value) => value.length <= 100,
                       })}
                       className="FormInput alder-form-control"
@@ -147,7 +147,7 @@ const PatientLogCreatePage = () => {
                     <Input
                       {...register('lastName', {
                         // required: true,
-                        pattern: PATTERN.CHAR_NUM_DASH,
+                        pattern: PATTERN.CHAR_SPACE_DASH_TWO,
                         validate: (value) => value.length <= 100,
                       })}
                       className="FormInput alder-form-control"

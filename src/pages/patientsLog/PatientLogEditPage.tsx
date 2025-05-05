@@ -48,7 +48,8 @@ const PatientLogEditPage = () => {
   } = useForm<Patient>();
 
   const fullName = state?.name || '';
-  const [firstName = '', lastName = ''] = fullName.split(' ');
+  const nameWithoutFirstSpace = fullName.replace(/^\s+/, '');
+  const [firstName = '', lastName = ''] = nameWithoutFirstSpace.split(' ');
 
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e?.target?.files?.[0];
@@ -130,7 +131,7 @@ const PatientLogEditPage = () => {
                       {...register('firstName', {
                         required: true,
                         value: firstName,
-                        pattern: PATTERN.CHAR_NUM_DASH,
+                        pattern: PATTERN.CHAR_SPACE_DASH_TWO,
                         validate: (value) => value.length <= 100,
                       })}
                       className="FormInput alder-form-control"
@@ -155,7 +156,7 @@ const PatientLogEditPage = () => {
                       {...register('lastName', {
                         // required: true,
                         value: lastName,
-                        pattern: PATTERN.CHAR_NUM_DASH,
+                        pattern: PATTERN.CHAR_SPACE_DASH_TWO,
                         validate: (value) => value.length <= 100,
                       })}
                       className="FormInput alder-form-control"

@@ -7,7 +7,7 @@ const DetailsFieldComponent = ({ label = '', value = '' }) => {
   return (
     <div className="">
       <p className="text-sm text-[#A9A9A9]">{label}</p>
-      <p className="w-[75%] truncate text-xl">{value}</p>
+      <p className="w-[75%] text-xl">{value}</p>
     </div>
   );
 };
@@ -43,16 +43,16 @@ const PatientProfileInfo = ({ showReset = false, data }: any) => {
           <div className="col-span-3 px-6">
             <DetailsFieldComponent label="Name" value={data?.name} />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-1">
             <DetailsFieldComponent label="Gender" value={data?.gender} />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-1">
             <DetailsFieldComponent label="Age" value={data?.age || '--'} />
           </div>
           <div className="col-span-2">
             <DetailsFieldComponent label="Phone" value={data?.phone} />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-4">
             <DetailsFieldComponent
               label="Address"
               value={data?.address || '--'}

@@ -1936,3 +1936,10 @@ End MD - AlDer Theme Styles
 .css-1x51dt5-MuiInputBase-input-MuiInput-input {
   @apply text-secondary2 !important;
 }
+
+.css-1uvydh2 {
+  height: 0.5375em !important;
+}
+.css-10egq61 {
+  height: 100% !important;
+}

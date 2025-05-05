@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
 import assets from '../../../assets';
@@ -42,7 +42,22 @@ function LoginPage() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoader, setIsLoader] = useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const passwordRef = useRef(null);
+  const handleClickShowPassword = () => {
+    const input: any = passwordRef.current;
+    const position = input?.selectionStart;
+
+    setShowPassword((prev) => !prev);
+
+    // Set timeout to wait for re-render
+    setTimeout(() => {
+      if (input && position != null) {
+        input.setSelectionRange(position, position);
+      }
+    }, 0);
+  };
+
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -193,6 +208,7 @@ function LoginPage() {
               </span>
               <FormControl className="m-1 w-full" variant="filled">
                 <Input
+                  inputRef={passwordRef}
                   className="input-with-icon h-[50px] after:border-b-secondary"
                   id="password"
                   type={showPassword ? 'text' : 'password'}

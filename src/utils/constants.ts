@@ -137,6 +137,7 @@ export const PATTERN = {
   ADDRESS_ONLY: /^[\s\S]+$/, // used for textfield address
   CHAR_SPEC_NUM_DASH: /^[\s\S]+$/, // used for textfield address
   CHAR_NUM_DASH: /^[\s\S]+$/, // used for only num,chars,dash like; postal code
+  CHAR_SPACE_DASH_TWO: /^[A-Za-z\s-_]+$/,
   NUM_PLUS_MINUS: /^[+-\d\s]+$/,
   ACTION_WITHOUT_SPACE: /^[a-zA-Z0-9/-]+$/,
   PASSWORD: /^[\s\S]+$/,
